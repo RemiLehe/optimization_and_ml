@@ -54,7 +54,7 @@ def create_triplet(K):
 
 
     #define constants
-    quad_thick = torch.tensor(0.01)
+    quad_thick = torch.tensor(0.1)
     quad_sep = torch.tensor(1.0)
     quad_to_screen = torch.tensor(0.5)
 
