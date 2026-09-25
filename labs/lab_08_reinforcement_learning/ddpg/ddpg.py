@@ -29,15 +29,17 @@ class DDPGAgent:
         self.gamma = gamma
         self.tau = tau
         
-        # Initialize critic and actorr networks
+        # Initialize critic and actor networks
         self.critic = Critic(self.obs_dim, self.action_dim).to(self.device)
         self.critic_target = Critic(self.obs_dim, self.action_dim).to(self.device)
         
         self.actor = Actor(self.obs_dim, self.action_dim,self.max_action).to(self.device)
-        self.actor_target = Actor(self.obs_dim, self.action_dim).to(self.device)
+        self.actor_target = Actor(self.obs_dim, self.action_dim, self.max_action).to(self.device)
     
-        # Copy target network paramters for critic
+        # Copy target network parameters for critic and actor
         for target_param, param in zip(self.critic_target.parameters(), self.critic.parameters()):
+            target_param.data.copy_(param.data)
+        for target_param, param in zip(self.actor_target.parameters(), self.actor.parameters()):
             target_param.data.copy_(param.data)
         
         # Set Optimization algorithms
